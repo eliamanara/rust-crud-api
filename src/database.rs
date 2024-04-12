@@ -4,12 +4,12 @@ use std::net::{ TcpListener, TcpStream };
 use std::io::{ Read, Write };
 use std::env;
 
-//set_database function
 pub fn set_database(db_url: &str) -> Result<(), PostgresError> {
-    //Connect to database
+    
+    // connect to database
     let mut client = Client::connect(db_url, NoTls)?;
 
-    //Create table
+    // create table
     client.batch_execute(
         "CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,

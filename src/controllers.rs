@@ -9,7 +9,6 @@ use crate::constants::OK_RESPONSE;
 use crate::constants::INTERNAL_SERVER_ERROR;
 use crate::constants::NOT_FOUND;
 
-//handle_post_request function
 pub fn handle_post_request(request: &str) -> (String, String) {
     match (crate::utils::get_user_request_body(&request), Client::connect(DB_URL, NoTls)) {
         (Ok(user), Ok(mut client)) => {
@@ -26,7 +25,6 @@ pub fn handle_post_request(request: &str) -> (String, String) {
     }
 }
 
-//handle_get_request function
 pub fn handle_get_request(request: &str) -> (String, String) {
     match (crate::utils::get_id(&request).parse::<i32>(), Client::connect(DB_URL, NoTls)) {
         (Ok(id), Ok(mut client)) =>
@@ -47,7 +45,6 @@ pub fn handle_get_request(request: &str) -> (String, String) {
     }
 }
 
-//handle_get_all_request function
 pub fn handle_get_all_request(request: &str) -> (String, String) {
     match Client::connect(DB_URL, NoTls) {
         Ok(mut client) => {
@@ -67,7 +64,6 @@ pub fn handle_get_all_request(request: &str) -> (String, String) {
     }
 }
 
-//handle_put_request function
 pub fn handle_put_request(request: &str) -> (String, String) {
     match
         (
@@ -90,7 +86,6 @@ pub fn handle_put_request(request: &str) -> (String, String) {
     }
 }
 
-//handle_delete_request function
 pub fn handle_delete_request(request: &str) -> (String, String) {
     match (crate::utils::get_id(&request).parse::<i32>(), Client::connect(DB_URL, NoTls)) {
         (Ok(id), Ok(mut client)) => {

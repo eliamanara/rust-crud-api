@@ -1,12 +1,12 @@
-use postgres::{ Client, NoTls };
 use postgres::Error as PostgresError;
-use std::net::{ TcpListener, TcpStream };
-use std::io::{ Read, Write };
+use postgres::{Client, NoTls};
 use std::env;
+use std::io::{Read, Write};
+use std::net::{TcpListener, TcpStream};
 
-mod database;
-mod controllers;
 mod constants;
+mod controllers;
+mod database;
 mod models;
 mod utils;
 
@@ -48,15 +48,20 @@ fn handle_client(mut stream: TcpStream) {
             request.push_str(String::from_utf8_lossy(&buffer[..size]).as_ref());
 
             let (status_line, content) = match &*request {
-                r if r.starts_with("POST /users") => controllers::handle_post_request(r),
-                r if r.starts_with("GET /users/") => controllers::handle_get_request(r),
-                r if r.starts_with("GET /users") => controllers::handle_get_all_request(r),
-                r if r.starts_with("PUT /users/") => controllers::handle_put_request(r),
-                r if r.starts_with("DELETE /users/") => controllers::handle_delete_request(r),
-                _ => (constants::NOT_FOUND.to_string(), "404 Not Found".to_string()),
+                r if r.starts_with("POST /books") => controllers::handle_post_request(r),
+                r if r.starts_with("GET /books/") => controllers::handle_get_request(r),
+                r if r.starts_with("GET /books") => controllers::handle_get_all_request(r),
+                r if r.starts_with("PUT /books/") => controllers::handle_put_request(r),
+                r if r.starts_with("DELETE /books/") => controllers::handle_delete_request(r),
+                _ => (
+                    constants::NOT_FOUND.to_string(),
+                    "404 Not Found".to_string(),
+                ),
             };
 
-            stream.write_all(format!("{}{}", status_line, content).as_bytes()).unwrap();
+            stream
+                .write_all(format!("{}{}", status_line, content).as_bytes())
+                .unwrap();
         }
         Err(e) => {
             println!("Error: {}", e);

@@ -1,6 +1,6 @@
 #[derive(Serialize, Deserialize)]
-pub struct User {
+pub struct Book {
     pub id: Option<i32>,
-    pub name: String,
-    pub email: String,
+    pub author: String,
+    pub title: String,
 }

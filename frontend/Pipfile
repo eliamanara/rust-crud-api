@@ -9,6 +9,7 @@ sqlalchemy = "*"
 psycopg2-binary = "*"
 watchdog = "*"
 pandas = "*"
+streamlit-extras = "*"
 
 [dev-packages]
 

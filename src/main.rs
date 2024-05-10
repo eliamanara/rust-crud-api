@@ -14,11 +14,18 @@ mod utils;
 extern crate serde_derive;
 
 const DB_URL: &str = env!("DATABASE_URL");
+const DATABASE_USERNAME: &str = env!("DATABASE_USERNAME");
+const DATABASE_PASSWORD: &str = env!("DATABASE_PASSWORD");
 
 fn main() {
     //set database
     if let Err(e) = database::set_database(DB_URL) {
         println!("Error: {}", e);
+        return;
+    }
+
+    if let Err(e) = database::create_admin_user(DB_URL, DATABASE_USERNAME, DATABASE_PASSWORD) {
+        println!("Error creating admin user: {}", e);
         return;
     }
 
